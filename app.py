@@ -5,11 +5,14 @@ import brats_preprocessing.brats_preprocessing as bp
 import argparse
 from redis import Redis
 import rq
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '12345678'
 
 queue = rq.Queue('brats', connection=Redis.from_url('redis://'))
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 args = argparse.Namespace()
 args.url_air         = 'https://air.radiology.ucsf.edu/api/'
