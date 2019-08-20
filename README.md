@@ -11,6 +11,13 @@
     ```bash
     celery -A app.celery worker -l info
     ```
+
+1. Start `rq`.
+
+    ```bash
+    rq worker
+    ```
+
 1. Start `flask`.
 
     ```bash
