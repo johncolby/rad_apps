@@ -9,4 +9,5 @@ def main():
     if form.validate_on_submit():
         queue.enqueue(process_gbm_wrapper, form.data, job_timeout=2700)
         return redirect(url_for('main'))
+        flash(f'Segmentation request submitted for acc # {form.acc.data}')
     return render_template('input.html', form=form)
