@@ -12,3 +12,6 @@ class Config(object):
     MAIL_USE_TLS  = os.environ.get('MAIL_USE_TLS') or 1
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    AIR_URL       = os.environ.get('AIR_URL')
+    SEG_URL       = os.environ.get('SEG_URL')
+    MODEL_RDATA   = os.environ.get('MODEL_RDATA') or 'model.Rdata'

@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  web:
+    build:
+      context: .
+      args:
+      - GIT_TOKEN
+    image: brats_app
+    env_file:
+    - .env
+    environment:
+      REDIS_URL: redis://redis
+    command: gunicorn -b :5000 --access-logfile - --error-logfile - brats_app:app
+    ports:
+    - "5001:5000"
+    networks:
+    - net
+  worker:
+    image: brats_app
+    deploy:
+      replicas: 4
+    env_file:
+    - .env
+    command: rq worker -u redis://redis
+    networks:
+    - net
+  redis:
+    image: redis
+    networks:
+    - net
+networks:
+  net:
+    attachable: true
