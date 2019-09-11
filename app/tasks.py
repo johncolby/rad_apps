@@ -7,10 +7,10 @@ from app.email import send_email
 def process_gbm_wrapper(form):
     args = argparse.Namespace()
     args.acc             = form['acc']
-    args.url_air         = 'https://air.radiology.ucsf.edu/api/'
-    args.model_path      = '/mnt/crypt/jcolby/dcmclass/model.Rdata'
-    args.cred_path       = '/home/jcolby/.air_login.txt'
-    args.url_seg         = 'http://localhost:8082/predictions/unet'
+    args.air_url         = app.config['AIR_URL']
+    args.model_path      = app.config['MODEL_RDATA']
+    args.cred_path       = None
+    args.seg_url         = app.config['SEG_URL']
     args.mni_mask        = True
     args.do_bias_correct = True
 
