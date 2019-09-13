@@ -5,7 +5,7 @@
 1. Start `redis`.
 
     ```bash
-    docker run -d -p 6379:6379 redis --name redis
+    sudo docker run -d -p 6379:6379 --name redis redis
 
     ```
 
