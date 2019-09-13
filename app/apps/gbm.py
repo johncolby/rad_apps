@@ -25,7 +25,7 @@ def wrapper_fun(app, form, output_dir):
     args.acc             = form['acc']
     args.air_url         = app.config['AIR_URL']
     args.model_path      = app.config['MODEL_RDATA']
-    args.cred_path       = None
+    args.cred_path       = app.config['DOTENV_FILE']
     args.seg_url         = app.config['SEG_URL']
     args.mni_mask        = form['opts']['mni_mask']
     args.do_bias_correct = form['opts']['bias_correct']

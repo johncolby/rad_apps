@@ -34,3 +34,6 @@ RUN fc-cache -f -v
 WORKDIR /app
 COPY app app
 COPY model.Rdata rad_apps.py config.py ./
+
+# Setup environment
+ENV TZ America/Los_Angeles

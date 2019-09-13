@@ -5,11 +5,12 @@ services:
       context: .
       args:
       - GIT_TOKEN
-    env_file:
     image: rad_apps
+    secrets:
     - .env
     environment:
       REDIS_URL: redis://redis
+      DOTENV_FILE: /run/secrets/.env
     command: gunicorn -b :5000 --access-logfile - --error-logfile - rad_apps:app
     ports:
     - "5001:5000"
@@ -19,8 +20,10 @@ services:
     image: rad_apps
     deploy:
       replicas: 4
-    env_file:
+    secrets:
     - .env
+    environment:
+      DOTENV_FILE: /run/secrets/.env
     command: rq worker -u redis://redis
     networks:
     - net
@@ -31,3 +34,6 @@ services:
 networks:
   net:
     attachable: true
+secrets:
+  .env:
+    file: .env
