@@ -18,6 +18,8 @@ services:
     - net
   worker:
     image: rad_apps
+    volumes:
+      - $OUTPUT_DIR_HOST:/output_dir
     deploy:
       replicas: 4
     secrets:

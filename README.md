@@ -33,7 +33,7 @@ sudo docker-compose build --no-cache
 
 Startup
 ```bash
-sudo docker stack deploy -c docker-compose.yml rad_apps
+sudo bash -c "docker stack deploy -c <(docker-compose config) rad_apps"
 sudo docker run --gpus 1 -itd --network rad_apps_net --name mms -p 8082:8082 -v /home/jcolby/Research/brats_service/:/mms mms:latest mxnet-model-server --start --model-store=/mms --models unet=unet.mar
 ```
 
