@@ -15,3 +15,4 @@ class Config(object):
     AIR_URL       = os.environ.get('AIR_URL')
     SEG_URL       = os.environ.get('SEG_URL')
     MODEL_RDATA   = os.environ.get('MODEL_RDATA') or 'model.Rdata'
+    OUTPUT_DIR_NODE = os.environ.get('OUTPUT_DIR_NODE') or '.'

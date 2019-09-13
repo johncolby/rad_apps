@@ -20,7 +20,7 @@ class Options(FlaskForm):
     def __init__(self, csrf_enabled=False, *args, **kwargs):
         super(Options, self).__init__(csrf_enabled=csrf_enabled, *args, **kwargs)
 
-def wrapper_fun(app, form):
+def wrapper_fun(app, form, output_dir):
     args = argparse.Namespace()
     args.acc             = form['acc']
     args.air_url         = app.config['AIR_URL']
@@ -29,6 +29,7 @@ def wrapper_fun(app, form):
     args.seg_url         = app.config['SEG_URL']
     args.mni_mask        = form['opts']['mni_mask']
     args.do_bias_correct = form['opts']['bias_correct']
+    args.output_dir      = output_dir
 
     bp.process_gbm(args)
 
