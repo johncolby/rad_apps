@@ -1,6 +1,16 @@
 # README
 
-## Individual services
+## Installation
+
+```
+pip install <repo_URL>
+```
+
+## Setup
+
+Create a configuration file using the template at [.env_template](.env_template)
+
+## Development server
 
 1. Start `redis`.
 
@@ -18,12 +28,19 @@
 1. Start `flask`.
 
     ```bash
+    export DOTENV_FILE=/path/to/.env # generated above
     export FLASK_APP=rad_apps.py
     export FLASK_ENV=development
     flask run
     ```
 
-## Docker
+## Production docker cluster
+
+```
+cd /path/to/rad_apps
+```
+
+Make sure an appropriate `.env` file is available in the current directory.
 
 Build
 ```bash
@@ -37,7 +54,7 @@ sudo bash -c "docker stack deploy -c <(docker-compose config) rad_apps"
 sudo docker run --gpus 1 -itd --network rad_apps_net --name mms -p 8082:8082 -v /home/jcolby/Research/brats_service/:/mms mms:latest mxnet-model-server --start --model-store=/mms --models unet=unet.mar
 ```
 
-Monitoring
+Cluster management notes
 ```bash
 sudo docker stack ls
 sudo docker stack services rad_apps
