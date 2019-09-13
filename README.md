@@ -18,7 +18,7 @@
 1. Start `flask`.
 
     ```bash
-    export FLASK_APP=brats_app.py
+    export FLASK_APP=rad_apps.py
     export FLASK_ENV=development
     flask run
     ```
@@ -33,22 +33,23 @@ sudo docker-compose build --no-cache
 
 Startup
 ```bash
-sudo docker stack deploy -c docker-compose.yml brats_app
-sudo docker run --gpus 1 -itd --network brats_app_net --name mms -p 8082:8082 -v /home/jcolby/Research/brats_service/:/mms mms:latest mxnet-model-server --start --model-store=/mms --models unet=unet.mar
+sudo docker stack deploy -c docker-compose.yml rad_apps
+sudo docker run --gpus 1 -itd --network rad_apps_net --name mms -p 8082:8082 -v /home/jcolby/Research/brats_service/:/mms mms:latest mxnet-model-server --start --model-store=/mms --models unet=unet.mar
 ```
 
 Monitoring
 ```bash
 sudo docker stack ls
-sudo docker stack services brats_app
+sudo docker stack services rad_apps
 sudo docker container ls
-sudo docker service logs -f --no-task-ids brats_app_worker
-sudo docker service scale brats_app_worker=2
+sudo docker service logs -f --no-task-ids rad_apps_worker
+sudo docker service ps rad_apps_worker --no-trunc
+sudo docker service scale rad_apps_worker=2
 ```
 
 
 Shutdown
 ```bash
 sudo docker rm -f mms
-sudo docker stack rm brats_app
+sudo docker stack rm rad_apps
 ```

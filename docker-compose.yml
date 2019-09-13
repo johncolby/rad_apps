@@ -5,18 +5,18 @@ services:
       context: .
       args:
       - GIT_TOKEN
-    image: brats_app
     env_file:
+    image: rad_apps
     - .env
     environment:
       REDIS_URL: redis://redis
-    command: gunicorn -b :5000 --access-logfile - --error-logfile - brats_app:app
+    command: gunicorn -b :5000 --access-logfile - --error-logfile - rad_apps:app
     ports:
     - "5001:5000"
     networks:
     - net
   worker:
-    image: brats_app
+    image: rad_apps
     deploy:
       replicas: 4
     env_file:

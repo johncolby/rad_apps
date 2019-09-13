@@ -33,4 +33,4 @@ RUN fc-cache -f -v
 # Add Flask app files
 WORKDIR /app
 COPY app app
-COPY model.Rdata brats_app.py config.py ./
+COPY model.Rdata rad_apps.py config.py ./
