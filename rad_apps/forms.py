@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, BooleanField, SelectField, FormField, SubmitField
 from wtforms.validators import Optional, DataRequired, Email, Length, Regexp
-from app import app, rad_apps
+from rad_apps import app, app_list
 
 class ChooseApp(FlaskForm):
-    app_name = SelectField('Application', choices=rad_apps.get_app_list())
+    app_name = SelectField('Application', choices=app_list.get_app_list())
     submit = SubmitField('Submit') 
 
 def get_form(app_name):
@@ -16,6 +16,6 @@ def get_form(app_name):
                                           Length(min = 8, max = 8), 
                                           Regexp('[0-9]{8}')])
             email = StringField('Email', validators=[Optional(), Email()])
-            opts = FormField(rad_apps.apps[app_name].form_opts)
+            opts = FormField(app_list.apps[app_name].form_opts)
             submit = SubmitField('Submit')
         return SegmentationForm()

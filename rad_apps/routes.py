@@ -1,7 +1,7 @@
 from flask import request, render_template, redirect, url_for, flash
-from app import app, queue
-from app.tasks import app_wrapper
-from app.forms import ChooseApp, get_form
+from rad_apps import app, queue
+from .tasks import app_wrapper
+from .forms import ChooseApp, get_form
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

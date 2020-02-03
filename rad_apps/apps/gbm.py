@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, FormField, IntegerField
 from wtforms.validators import Optional
 import brats_preprocessing.brats_preprocessing as bp
-from ..radapp import RadApp
+from ..appplugin import AppPlugin
 
 class Inputs(FlaskForm):
     flair = IntegerField('FLAIR', validators=[Optional()])
@@ -34,6 +34,6 @@ def wrapper_fun(app, form, output_dir):
     bp.process_gbm(args)
 
 
-app = RadApp(long_name = 'Glioblastoma', 
+app = AppPlugin(long_name = 'Glioblastoma', 
            form_opts = Options,
            wrapper_fun = wrapper_fun)

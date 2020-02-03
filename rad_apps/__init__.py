@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from config import Defaults
+from .config import Defaults
 from redis import Redis
 import rq
 from flask_mail import Mail
@@ -20,6 +20,6 @@ mail = Mail(app)
 
 bootstrap = Bootstrap(app)
 
-rad_apps = RadApps()
+app_list = RadApps()
 
-from app import routes
+from rad_apps import routes

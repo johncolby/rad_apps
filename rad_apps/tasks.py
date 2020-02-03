@@ -1,9 +1,9 @@
 import os
-from app import app, rad_apps
-from app.email import send_email
+from rad_apps import app, app_list
+from .email import send_email
 
 def app_wrapper(app_name, form):
-    rad_app = rad_apps.apps[app_name]
+    rad_app = app_list.apps[app_name]
     output_dir = os.path.join(app.config['OUTPUT_DIR_NODE'], app_name)
     rad_app.wrapper_fun(app, form, output_dir)
 

@@ -32,8 +32,8 @@ RUN fc-cache -f -v
 
 # Add Flask app files
 WORKDIR /app
-COPY app app
-COPY model.Rdata rad_apps.py config.py ./
+COPY rad_apps rad_apps
+COPY model.Rdata ./
 
 # Setup environment
 ENV TZ America/Los_Angeles

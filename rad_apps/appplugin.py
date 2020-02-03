@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 
-class RadApp(object):
+class AppPlugin(object):
     def __init__(self, long_name = '', description = '', form_opts = FlaskForm,
         wrapper_fun = None):
         self.long_name = long_name
