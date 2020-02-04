@@ -8,12 +8,15 @@ setup(
     zip_safe=False,
     install_requires=[
         'air_download @ git+https://git.radiology.ucsf.edu/jcolby/air_download.git#egg=air_download',
-        'brats_preprocessing @ git+https://git.radiology.ucsf.edu/jcolby/brats_preprocessing.git#egg=brats_preprocessing[classify_series]',
         'Flask',
         'Flask-Bootstrap',
+        'Flask-Mail',
         'Flask-WTF',
+        'gunicorn',
         'python-dotenv',
         'redis',
         'rq',
+        'pandas',
+        'pydicom'
     ]
 )
