@@ -1,10 +1,3 @@
 -e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/air_download.git#egg=air_download
+-e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/rad_apps.git#egg=rad_apps
 -e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/brats_preprocessing.git#egg=brats_preprocessing[classify_series]
-Flask==1.1.1
-Flask-Bootstrap==3.3.7.1
-Flask-Mail==0.9.1
-Flask-WTF==0.14.2
-gunicorn==19.9.0
-python-dotenv==0.10.3
-redis==3.3.7
-rq==1.1.0
