@@ -20,11 +20,8 @@ class RadStudy():
         self.model_path   = model_path
         self.dir_tmp      = ''
         self.dir_study    = ''
-        self.channels     = ['flair', 't1', 't1ce', 't2']
-        self.series_picks = pd.DataFrame({'class': self.channels,
-                                          'prob': '',
-                                          'SeriesNumber': '',
-                                          'series': ''})
+        self.channels     = []
+        self.series_picks = pd.DataFrame()
         self.acc          = acc
         self.hdr          = ''
         self.study_date   = ''
@@ -57,6 +54,12 @@ class RadStudy():
 
     def setup(self):
         """Setup study for processing"""
+        # Create table of series picks
+        if self.series_picks.empty:
+            self.series_picks = pd.DataFrame({'class': self.channels,
+                                              'prob': '',
+                                              'SeriesNumber': '',
+                                              'series': ''})
         # Create temporary working directory
         if not self.dir_tmp:
             self.dir_tmp = tempfile.mkdtemp()
