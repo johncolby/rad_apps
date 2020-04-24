@@ -1,5 +1,5 @@
 from flask import request, render_template, redirect, url_for, flash
-from rad_apps import app, queue
+from rad_apps import app, app_list, queue
 from .tasks import app_wrapper
 from .forms import ChooseApp, get_form
 
@@ -14,9 +14,10 @@ def index():
 @app.route('/apps/<app_name>', methods=['GET', 'POST'])
 def input(app_name):
     form = get_form(app_name)
+    long_name = app_list.get_app_info(app_name).long_name
     if form.validate_on_submit():
         queue.enqueue(app_wrapper, app_name, form.data, job_timeout=2700)
         flash(f'Analysis request submitted for acc # {form.acc.data}')
         form.acc.data = ''
-        return render_template('input.html', form=form)
-    return render_template('input.html', form=form)
+        return render_template('input.html', title=app_name, long_name=long_name, form=form)
+    return render_template('input.html', title=app_name, long_name=long_name, form=form)
