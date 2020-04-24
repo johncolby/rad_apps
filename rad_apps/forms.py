@@ -13,8 +13,8 @@ def get_form(app_name):
             acc = StringField('Accession Number', 
                               render_kw={"placeholder": "12345678"}, 
                               validators=[DataRequired(), 
-                                          Length(min = 8, max = 8), 
-                                          Regexp('[0-9]{8}')])
+                                          Length(min = 8, max = 11), 
+                                          Regexp('[0-9]+')])
             email = StringField('Email', validators=[Optional(), Email()])
             opts = FormField(app_list.apps[app_name].form_opts)
             submit = SubmitField('Submit')
