@@ -1,10 +1,11 @@
-from .apps import gbm, mets
+from .apps import gbm, mets, heme
 
 class RadApps(object):
     def __init__(self):
         self.apps = {
             'gbm': gbm.app,
-            'mets': mets.app
+            'mets': mets.app,
+            'heme': heme.app
         }
 
     def get_app_list(self):
