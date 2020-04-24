@@ -64,6 +64,7 @@ class RadStudy():
         if not self.dir_tmp:
             self.dir_tmp = tempfile.mkdtemp()
             os.mkdir(os.path.join(self.dir_tmp, 'nii'))
+            os.mkdir(os.path.join(self.dir_tmp, 'output'))
 
         # Extract study archive
         if not self.dir_study and self.zip_path:
