@@ -16,7 +16,9 @@ from rpy2.robjects import pandas2ri
 pandas2ri.activate()
 
 class RadStudy():
-    def __init__(self, acc='', zip_path='', model_path=''):
+    def __init__(self, acc='', zip_path='', model_path='', download_url='',
+        cred_path='', process_url='', output_dir=''):
+
         self.zip_path     = zip_path
         self.model_path   = model_path
         self.dir_tmp      = ''
@@ -27,17 +29,21 @@ class RadStudy():
         self.hdr          = ''
         self.study_date   = ''
         self.app_name     = ''
+        self.download_url = download_url
+        self.cred_path    = cred_path
+        self.process_url  = process_url
+        self.output_dir   = output_dir
         # assert self.acc or self.zip_path, 'No input study provided.'
 
-    def download(self, URL, cred_path):
+    def download(self):
         """Download study via AIR API"""
 
         assert not self.zip_path, '.zip path already available.'
         assert self.dir_tmp, 'Working area not setup yet.'
         args = argparse.Namespace()
-        args.URL = URL
+        args.URL = self.download_url
         args.acc = self.acc
-        args.cred_path = cred_path
+        args.cred_path = self.cred_path
         args.profile = -1
         args.output = os.path.join(self.dir_tmp, f'{self.acc}.zip')
         air.main(args)
@@ -111,7 +117,7 @@ class RadStudy():
 
     def copy_results(self, output_dir = '.'):
         src = os.path.join(self.dir_tmp, 'output')
-        dest = os.path.join(output_dir, self.acc)
+        dest = os.path.join(self.output_dir, self.acc)
         assert not os.path.exists(dest), 'Output directory already exists.'
         shutil.copytree(src, dest)
 
@@ -130,13 +136,13 @@ class RadStudy():
         else:
             print('Nothing to remove.')
 
-    def run(self, args):
+    def run(self):
         try:
             self.setup()
-            self.download(URL = args.air_url, cred_path = args.cred_path)
-            self.process(endpoint = args.seg_url)
+            self.download()
+            self.process()
             self.report()
-            self.copy_results(output_dir = args.output_dir)
+            self.copy_results()
             self.rm_tmp()
         except: 
             logging.exception('Processing failed.')
