@@ -20,6 +20,6 @@ mail = Mail(app)
 
 bootstrap = Bootstrap(app)
 
-app_list = RadApps()
+app_list = RadApps(app)
 
 from rad_apps import routes

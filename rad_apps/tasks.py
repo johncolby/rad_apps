@@ -4,11 +4,11 @@ from .email import send_email
 
 def app_wrapper(app_name, form):
     rad_app = app_list.apps[app_name]
-    output_dir = os.path.join(app.config['OUTPUT_DIR_NODE'], app_name)
-    rad_app.wrapper_fun(app, form, output_dir)
+    rad_app.wrapper_fun(app, form)
 
     if form['email']:
         report_name = f'{form["acc"]}_{app_name}.pdf'
+        output_dir = os.path.join(app.config['OUTPUT_DIR_NODE'], app_name)
         report_path = os.path.join(output_dir, form["acc"], f'{app_name}.pdf')
         app.app_context().push()
         with open(os.path.join(report_path), 'rb') as fp:

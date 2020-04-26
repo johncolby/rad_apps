@@ -1,6 +1,7 @@
 import air_download.air_download as air
 import argparse
 import glob
+import logging
 import os
 import pandas as pd
 import pydicom
@@ -42,6 +43,7 @@ class RadStudy():
         air.main(args)
         self.zip_path = args.output
         self._extract()
+        self.setup()
 
     def _extract(self):
         """Extract study archive"""
@@ -127,3 +129,15 @@ class RadStudy():
             shutil.rmtree(self.dir_tmp)
         else:
             print('Nothing to remove.')
+
+    def run(self, args):
+        try:
+            self.setup()
+            self.download(URL = args.air_url, cred_path = args.cred_path)
+            self.process(endpoint = args.seg_url)
+            self.report()
+            self.copy_results(output_dir = args.output_dir)
+            self.rm_tmp()
+        except: 
+            logging.exception('Processing failed.')
+            self.rm_tmp()

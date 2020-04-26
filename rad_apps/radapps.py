@@ -1,17 +1,14 @@
-from .apps import gbm, mets, heme
+import importlib
 
 class RadApps(object):
-    def __init__(self):
-        self.apps = {
-            'gbm': gbm.app,
-            'mets': mets.app,
-            'heme': heme.app
-        }
+    def __init__(self, app):
+        app_names = eval(app.config['APPS'])
+        apps = [importlib.import_module(app_name).app for app_name in app_names]
+        self.apps = {app.short_name : app for app in apps}
 
     def get_app_list(self):
         return [(x, y.long_name) for x, y in zip(self.apps.keys(), self.apps.values())]
 
     def get_app_info(self, short_name):
-        # import pdb; pdb.set_trace()
         return self.apps[short_name]
 
