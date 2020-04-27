@@ -27,6 +27,7 @@ class RadStudy():
         self.series_picks = pd.DataFrame()
         self.acc          = acc
         self.hdr          = ''
+        self.series       = None
         self.study_date   = ''
         self.app_name     = ''
         self.download_url = download_url
@@ -78,8 +79,12 @@ class RadStudy():
         if not self.dir_study and self.zip_path:
             self._extract()
 
-        # Load representative DICOM header
+        # Load representative DICOM headers
         if self.dir_study and not self.hdr:
+            series_paths = glob.glob(f'{self.dir_study}/*')
+            series_numbers = [self._get_series_number(series_path) for series_path in series_paths]
+            self.series = pd.DataFrame({'SeriesNumber': series_numbers, 'path': series_paths})
+
             dcm_path = glob.glob(f'{self.dir_study}/*/*.dcm', recursive=True)[0]
             self.hdr = pydicom.read_file(dcm_path)
             self.acc = self.hdr.AccessionNumber
@@ -98,12 +103,13 @@ class RadStudy():
         """Manually specify directory paths to required series"""
         self.series_picks.series = paths
 
+    def _get_series_number(self, series_path):
+        dcm_path = glob.glob(f'{series_path}/*')[0]
+        return pydicom.read_file(dcm_path).SeriesNumber
+
     def series_to_path(self, series):
         """Convert a SeriesNumber to path"""
-        ro.r['library']('dcmclass')
-        ro.r['library']('dplyr')
-        tb = ro.r['load_study_headers'](os.path.join(self.dir_tmp, 'dcm'), 'SeriesNumber')
-        return tb.loc[tb['SeriesNumber'] == series]['path'][0]
+        return self.series.loc[self.series['SeriesNumber'] == series, 'path'].values[0]
 
     def report(self):
         """Generate PDF report"""
