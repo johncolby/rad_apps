@@ -12,6 +12,7 @@ setup(
         'Flask-Bootstrap',
         'Flask-Mail',
         'Flask-WTF',
+        'WTForms[email]',
         'gunicorn',
         'python-dotenv',
         'redis',
