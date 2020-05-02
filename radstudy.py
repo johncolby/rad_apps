@@ -36,6 +36,9 @@ class RadStudy():
         self.output_dir   = output_dir
         # assert self.acc or self.zip_path, 'No input study provided.'
 
+    def process(self):
+        raise NotImplementedError
+
     def download(self):
         """Download study via AIR API"""
 
