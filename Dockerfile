@@ -14,7 +14,7 @@ ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$FSLDIR
 
 # Setup R
 ARG GIT_TOKEN
-RUN echo "deb http://cran.us.r-project.org/bin/linux/debian buster-cran35/" >> /etc/apt/sources.list
+RUN echo "deb https://cloud.r-project.org/bin/linux/debian buster-cran35/" >> /etc/apt/sources.list
 RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 RUN apt update && apt install -y r-base
 RUN R -e "install.packages(c('neurobase', 'tidyverse', 'oro.dicom', 'remotes', 'dplyr', 'tibble', 'tidyr', 'purrr', 'readr', 'stringr', 'rlang', 'tidytext', 'tm', 'caret', 'glue', 'remotes', 'git2r', 'xgboost', 'bookdown'), repos = 'http://cran.us.r-project.org')"
