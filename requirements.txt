@@ -1,3 +1,6 @@
+mxnet
 -e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/air_download.git#egg=air_download
 -e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/rad_apps.git#egg=rad_apps
+-e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/unet_brats.git#egg=unet_brats
 -e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/brats_preprocessing.git#egg=brats_preprocessing[classify_series]
+-e git+https://oauth2:${GIT_TOKEN}@git.radiology.ucsf.edu/jcolby/rsna_heme.git#egg=rsna_heme

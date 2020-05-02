@@ -23,6 +23,7 @@ RUN R -e "remotes::install_git('https://git.radiology.ucsf.edu/jcolby/ucsfreport
 
 # Setup python
 RUN conda install python=3.7
+RUN conda install -c conda-forge gdcm
 COPY requirements.txt ./
 RUN /bin/bash -c 'pip install -r requirements.txt'
 
