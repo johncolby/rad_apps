@@ -8,6 +8,7 @@ class ModelService(object):
     """
     A base Model handler implementation.
     """
+
     def __init__(self):
         self.ctx = None
         self.model = None

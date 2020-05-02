@@ -1,7 +1,8 @@
-from flask import request, render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash
 from rad_apps import app, app_list, queue
 from .tasks import app_wrapper
 from .forms import ChooseApp, get_form
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -10,6 +11,7 @@ def index():
         app_name = form.app_name.data
         return redirect(url_for('input', app_name=app_name))
     return render_template('index.html', form=form)
+
 
 @app.route('/apps/<app_name>', methods=['GET', 'POST'])
 def input(app_name):
