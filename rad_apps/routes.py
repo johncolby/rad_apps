@@ -18,7 +18,7 @@ def input(app_name):
     form = get_form(app_name)
     long_name = app_list.get_app_info(app_name).long_name
     if form.validate_on_submit():
-        queue.enqueue(app_wrapper, app_name, form.data, job_timeout=2700)
+        queue.enqueue(app_wrapper, app_name, form.data, job_timeout=3600)
         flash(f'Analysis request submitted for acc # {form.acc.data}')
         form.acc.data = ''
         return render_template('input.html', title=app_name, long_name=long_name, form=form)
