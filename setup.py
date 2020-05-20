@@ -7,7 +7,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'air_download @ git+https://git.radiology.ucsf.edu/jcolby/air_download.git#egg=air_download',
+        'air_download @ git+https://github.com/johncolby/air_download',
         'Flask',
         'Flask-Bootstrap',
         'Flask-Mail',
