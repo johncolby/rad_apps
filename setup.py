@@ -16,6 +16,7 @@ setup(
         'gunicorn',
         'python-dotenv',
         'redis',
+        'rpy2',
         'rq',
         'pandas',
         'pydicom'
