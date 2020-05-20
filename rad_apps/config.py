@@ -2,6 +2,7 @@ import os
 
 
 class Defaults(object):
+    APPS = "['testapp']"
     SECRET_KEY = '12345678'
     REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
     MAIL_SERVER = 'smtp.office365.com'
