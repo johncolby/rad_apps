@@ -5,7 +5,7 @@ services:
       context: .
       args:
       - GIT_TOKEN
-    image: rad_apps
+    image: johncolby/rad_apps
     secrets:
     - .env
     environment:
@@ -17,7 +17,7 @@ services:
     networks:
     - net
   worker:
-    image: rad_apps
+    image: johncolby/rad_apps
     volumes:
       - $OUTPUT_DIR_HOST:/output_dir
     deploy:
