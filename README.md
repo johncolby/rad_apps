@@ -1,25 +1,27 @@
 # README
 
+This package contains a micro-application framework for performing medical image analysis on a clinical PACS.
+
 ## Installation
 
 ```
-pip install <repo_URL>
+pip install git+https://github.com/johncolby/rad_apps
 ```
 
 ## Setup
 
-Create a configuration file using the template at [.env_template](.env_template)
+Create a configuration file using the template at [.env_template](.env_template).
 
-## Development server
+## Run development server
 
-1. Start `redis`.
+1. Start `redis` message broker.
 
     ```bash
-    sudo docker run -d -p 6379:6379 --name redis redis
+    docker run -d -p 6379:6379 --name redis redis
 
     ```
 
-1. Start `rq`.
+1. Start redis queue, `rq`.
 
     ```bash
     rq worker
@@ -34,7 +36,8 @@ Create a configuration file using the template at [.env_template](.env_template)
     flask run
     ```
 
-## Production docker cluster
+***
+## Build docker image
 
 ```
 cd /path/to/rad_apps
@@ -48,25 +51,26 @@ sudo docker-compose build
 sudo docker-compose build --no-cache
 ```
 
+## Run production docker cluster
+
 Startup
 ```bash
-sudo bash -c "docker stack deploy -c <(docker-compose config) rad_apps"
-sudo docker run --gpus 1 -itd --network rad_apps_net --name mms -p 8082:8082 -v /home/jcolby/Research/brats_service/:/mms mms:latest mxnet-model-server --start --model-store=/mms --models unet=unet.mar
+bash -c "docker stack deploy -c <(docker-compose config) rad_apps"
+docker run --gpus 1 -itd --network rad_apps_net --name mms -p 8082:8082 -v /home/jcolby/Research/mms/:/mms awsdeeplearningteam/multi-model-server:nightly-mxnet-gpu mxnet-model-server --start --mms-config /mms/config.properties --model-store /mms --models gbm=gbm.mar heme=heme.mar
 ```
 
 Cluster management notes
 ```bash
-sudo docker stack ls
-sudo docker stack services rad_apps
-sudo docker container ls
-sudo docker service logs -f --no-task-ids rad_apps_worker
-sudo docker service ps rad_apps_worker --no-trunc
-sudo docker service scale rad_apps_worker=2
+docker stack ls
+docker stack services rad_apps
+docker container ls
+docker service logs -f --no-task-ids rad_apps_worker
+docker service ps rad_apps_worker --no-trunc
+docker service scale rad_apps_worker=2
 ```
-
 
 Shutdown
 ```bash
-sudo docker rm -f mms
-sudo docker stack rm rad_apps
+docker rm -f mms
+docker stack rm rad_apps
 ```
