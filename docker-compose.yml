@@ -3,8 +3,6 @@ services:
   web:
     build:
       context: .
-      args:
-      - GIT_TOKEN
     image: johncolby/rad_apps
     secrets:
     - .env
