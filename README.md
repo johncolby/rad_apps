@@ -58,7 +58,7 @@ Create a `.env` configuration file using the template at [`.env_template`](.env_
 
 ### Start cluster
 ```bash
-bash -c "docker stack deploy -c <(docker-compose config) rad_apps"
+docker stack deploy -c <(docker-compose config) rad_apps
 ```
 
 This command will automatically parse the [`docker-compose.yml`](docker-compose.yml) cluster specification, download the requisite docker images including [`johncolby/rad_apps`](https://hub.docker.com/r/johncolby/rad_apps), and spin up the cluster.
