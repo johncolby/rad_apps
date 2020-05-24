@@ -1,6 +1,9 @@
-# README
+# rad_apps
 
-This package contains a micro-application framework for performing medical image analysis on a clinical PACS.
+![Docker Automated build](https://img.shields.io/docker/automated/johncolby/rad_apps)
+![Docker Build Status](https://img.shields.io/docker/build/johncolby/rad_apps)
+
+A micro-application framework for performing medical image analysis on a clinical PACS.
 
 ## Run development server
 
@@ -12,7 +15,7 @@ pip install git+https://github.com/johncolby/rad_apps
 
 ### Setup
 
-Create a `.env` configuration file using the template at [`.env_template`](.env_template).
+Create a `.env` configuration file using the template at [`.env_template`](.env_template). For the small test application included, you only need to specify SMTP `MAIL_USERNAME`, `MAIL_PASSWORD`, and optionally `MAIL_SERVER` (if not Office 365).
 
 ### Start application services
 
@@ -38,6 +41,8 @@ Create a `.env` configuration file using the template at [`.env_template`](.env_
     flask run
     ```
 
+1. Point a web browser at [`localhost:5000`](http://localhost:5000).
+
 ***
 ## Run production docker cluster
 
@@ -62,6 +67,8 @@ docker stack deploy -c <(docker-compose config) rad_apps
 ```
 
 This command will automatically parse the [`docker-compose.yml`](docker-compose.yml) cluster specification, download the requisite docker images including [`johncolby/rad_apps`](https://hub.docker.com/r/johncolby/rad_apps), and spin up the cluster.
+
+Point a web browser at [`localhost:5001`](http://localhost:5001).
 
 In some use cases you might find yourself needing to connect other containers to the `rad_apps_net` overlay network. For example, to spin up a GPU-enabled deep learning model library, and connect it to the app cluster, one could do something like this:
 ```
@@ -94,17 +101,40 @@ docker stack rm rad_apps
 ***
 ## Build docker image (optional)
 
-```
-cd /path/to/rad_apps
-```
-
-Make sure an appropriate [`.env`](.env_template) file is available in the current directory.
-
-Build image:
 ```bash
-docker-compose build
+cd /path/to/rad_apps
+docker build
 ```
-or
+
+You may additionally want to extend the base [`johncolby/rad_apps`](https://hub.docker.com/r/johncolby/rad_apps) image for your own needs. For example, to include FSL tools (a hefty 10 GB), you may create a `Dockerfile` that looks something like this:
+
+```Dockerfile
+FROM johncolby/rad_apps:latest
+
+# Setup FSL
+ENV FSLDIR /usr/local/fsl
+RUN curl -O https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
+RUN /usr/bin/python2 fslinstaller.py -d ${FSLDIR} -q
+ENV FSLOUTPUTTYPE NIFTI_GZ
+ENV PATH ${FSLDIR}/bin:${PATH}
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$FSLDIR
 ```
-docker-compose build --no-cache
-```
+
+***
+## Application plugins
+
+This package comes with a small test application plugin at [`testapp.py`](testapp.py), which is loaded by default, and should be a useful starting point to write your own plugin module. 
+
+1. Subclass the `radstudy.RadStudy` class, defining at least a `process` method, and optionally replacing other methods to meet your own needs (e.g. a new `download` for your own PACS).
+
+1. Define any application-specific `Options`, which will be included in the web form.
+
+1. Define a small `wrapper_fun`, which will take those options (typically at least the requested accession number) and hand them off to your study instance.
+
+1. Instantiate an `AppPlugin` with these items as well as basic app metadata.
+
+1. Edit your `.env` file to point to your new module.
+
+Other examples: 
+- [`rsna_heme.app`](https://github.com/johncolby/rsna_heme/blob/master/rsna_heme/app.py)
+- [`brats_preprocessing.app`](https://github.com/johncolby/brats_preprocessing/blob/master/brats_preprocessing/app.py)
