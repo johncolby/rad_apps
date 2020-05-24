@@ -1,7 +1,7 @@
 # rad_apps
 
-![Docker Automated build](https://img.shields.io/docker/automated/johncolby/rad_apps)
-![Docker Build Status](https://img.shields.io/docker/build/johncolby/rad_apps)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/johncolby/rad_apps)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/johncolby/rad_apps)
 
 A micro-application framework for performing medical image analysis on a clinical PACS.
 
