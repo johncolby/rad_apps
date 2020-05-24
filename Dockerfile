@@ -2,7 +2,7 @@ FROM continuumio/miniconda3
 
 # Setup ubuntu packages
 RUN apt update
-RUN apt install -y build-essential dcm2niix curl libcurl4-openssl-dev libssl-dev
+RUN apt install -y build-essential dcm2niix curl libcurl4-openssl-dev libssl-dev libxml2-dev
 
 # Setup R
 RUN echo "deb https://cloud.r-project.org/bin/linux/debian buster-cran35/" >> /etc/apt/sources.list
